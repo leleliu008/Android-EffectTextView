@@ -79,14 +79,19 @@ public abstract class AbstractEffect implements IEffect {
 
     private void prepareAnimate() {
         mTextSize = mHTextView.getTextSize();
+
         mPaint.setTextSize(mTextSize);
-        for (int i = 0; i < mText.length(); i++) {
-            gaps[i] = mPaint.measureText(mText.charAt(i) + "");
+        int length1 = mText.length();
+        gaps = new float[length1];
+        for (int i = 0; i < length1; i++) {
+            gaps[i] = mPaint.measureText(String.valueOf(mText.charAt(i)));
         }
 
         mOldPaint.setTextSize(mTextSize);
-        for (int i = 0; i < mOldText.length(); i++) {
-            oldGaps[i] = mOldPaint.measureText(mOldText.charAt(i) + "");
+        int length2 = mOldText.length();
+        oldGaps = new float[length2];
+        for (int i = 0; i < length2; i++) {
+            oldGaps[i] = mOldPaint.measureText(String.valueOf(mOldText.charAt(i)));
         }
 
         oldStartX = (mHTextView.getMeasuredWidth() - mHTextView.getCompoundPaddingLeft() - mHTextView.getPaddingLeft() - mOldPaint
