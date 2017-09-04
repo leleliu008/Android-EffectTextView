@@ -101,7 +101,8 @@ public class EffectTextView extends TextView {
     }
 
     public void noEffect() {
-        setEffectType(EffectFactory.TYPE_NO_EFFECT);
+        effectType = EffectFactory.TYPE_NO_EFFECT;
+        effect = null;
         invalidate();
     }
 
