@@ -102,6 +102,7 @@ public class EffectTextView extends TextView {
 
     public void noEffect() {
         setEffectType(EffectFactory.TYPE_NO_EFFECT);
+        invalidate();
     }
 
     public void animateText(CharSequence text) {
