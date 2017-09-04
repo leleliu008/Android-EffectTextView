@@ -82,9 +82,10 @@ public class EffectTextView extends TextView {
      * @param effectType 效果类型
      */
     public void setEffectType(int effectType) {
+        IEffect effect = null;
         //顺序查找，找到一个就不找了，所以，顺序很重要
         for (int i = 0; i < effectFactories.size(); i++) {
-            IEffect effect = effectFactories.get(i).newInstance(effectType);
+            effect = effectFactories.get(i).newInstance(effectType);
             if (effect != null) {
                 this.effectType = effectType;
                 this.effect = effect;
@@ -92,29 +93,45 @@ public class EffectTextView extends TextView {
             }
         }
         if (effect == null) {
-            effect = effectFactories.get(0).newInstance(EffectFactory.TYPE_SCALE);
+            this.effectType = EffectFactory.TYPE_NO_EFFECT;
+            this.effect = null;
+        } else {
+            effect.init(this, attrs, defStyle);
         }
-        effect.init(this, attrs, defStyle);
+    }
+
+    public void noEffect() {
+        setEffectType(EffectFactory.TYPE_NO_EFFECT);
     }
 
     public void animateText(CharSequence text) {
-        effect.animateText(text);
+        if (effect != null) {
+            effect.animateText(text);
+        }
     }
 
     public void animateText(CharSequence text, int colors[]) {
-        if (effect instanceof RainBow) {
-            ((RainBow) effect).setColors(colors);
+        if (effect != null) {
+            if (effect instanceof RainBow) {
+                ((RainBow) effect).setColors(colors);
+            }
+            effect.animateText(text);
         }
-        effect.animateText(text);
     }
 
     public void reset(CharSequence text) {
-        effect.reset(text);
+        if (effect != null) {
+            effect.reset(text);
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        effect.onDraw(canvas);
+        if (effect == null) {
+            super.onDraw(canvas);
+        } else {
+            effect.onDraw(canvas);
+        }
     }
 
     @Override

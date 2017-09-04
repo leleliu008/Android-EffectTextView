@@ -7,6 +7,9 @@ package com.fpliu.newton.ui.effecttextview;
  */
 public interface EffectFactory {
 
+    //无效果
+    int TYPE_NO_EFFECT = -1;
+
     int TYPE_SCALE = 0;
 
     int TYPE_EVAPORATE = 1;

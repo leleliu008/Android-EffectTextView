@@ -28,7 +28,8 @@ final class Typing extends AbstractEffect {
 
     @Override
     protected void drawFrame(Canvas canvas) {
-        canvas.drawText(mText, 0, currentLength, startX, startY, mPaint);
+        //TODO 这里没有处理换行，文字过多的时候会有问题
+        canvas.drawText(mText, 0, currentLength, starta run of textX, startY, mPaint);
 
         if (currentLength < mText.length()) {
             currentLength++;
